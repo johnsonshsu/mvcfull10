@@ -215,11 +215,17 @@ if (app.Environment.IsDevelopment())
 //app.MapStaticAssets();
 app.UseStaticFiles();
 
-app.MapAreaControllerRoute(
-    name: "AdminArea",
-    areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+// 1. 區域路由(有 initPage 參數)
+app.MapControllerRoute(
+    name: "forms",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}/{initPage?}");
 
+// 2. 區域路由(無 initPage 參數)
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+// 3. 非區域路由(首頁等)
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
